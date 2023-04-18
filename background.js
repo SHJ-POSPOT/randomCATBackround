@@ -18,10 +18,15 @@ chrome.action.onClicked.addListener(async (tab) => {
 			chrome.scripting.insertCSS({
 			  target: { tabId: tabID },
 			  css: `
-				body {
+				html body {
 				  background-image: url("${imageUrl}") !important;
-				  background-repeat: no-repeat !important;
-				  background-size: cover !important;
+				  background-repeat: repeat-y !important;
+  				   background-size: 100% !important;
+				  z-index: 9999;
+				}
+				div {
+					background-image: none !important;
+					background-color: none !important;
 				}
 				  `
 			});
