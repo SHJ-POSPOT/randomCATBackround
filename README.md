@@ -1,0 +1,20 @@
+# Random Cat🐈 Background🐾
+
+#### 💡 사용 방법
+1. zip download -> 압축 해제 
+2. 크롬 브라우저 북마크 위 오른쪽 상단 점 세개 클릭 -> 도구 더보기 -> 확장 프로그램 (chrome://extensions/)
+3. 오른쪽 상단 개발자모드 on
+4. 압축해제된 확장 프로그램을 로드합니다. 선택
+5. randomCATBackround 폴더 선택 (해당 폴더 안에 manifest.json가 바로 있어야 합니다.)
+6. 크롬 오른쪽 상단 확장프로그램 선택 후 (Random Cat Background) 클릭
+------------
+#### 💡 참고 사항
+- chrome://, chrome-extension:// 사용 불가
+- 사이트에 따라 안되는 경우 있음 (ex. 1020px 이상의 네이버 블로그, Background-color 지정된 경우)
+- 사진에 따라 검정 글씨 안보일 수 있음
+- 원래 화면으로 다시 되돌리고 싶으면 새로고침
+- chatGPT에 쓰면 아주 👍
+------------
+#### 💡 출처
+- 로고 : 미리캠퍼스 (https://www.miricanvas.com/design)
+- 고양이 사진 : unsplash (https://unsplash.com/ko)
