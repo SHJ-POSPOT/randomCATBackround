@@ -1,4 +1,5 @@
-# Random Cat🐈 Background🐾
+# [Chrome Extension Program] 
+## Random Cat🐈 Background🐾
 
 #### 💡 사용 방법
 1. zip download -> 압축 해제 
