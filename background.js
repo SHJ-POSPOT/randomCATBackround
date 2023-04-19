@@ -21,25 +21,20 @@ chrome.action.onClicked.addListener(async (tab) => {
 						css: `
 						html body {
 							background-image: url("${imageUrl}") !important;
+							background-color: rgba(255, 255, 255, 0.8) !important;
 							background-repeat: no-repeat !important;
 							background-size: cover !important;
 							background-position: 100% !important;
-							opacity: 0.95 !important;
 							background-attachment: fixed !important;
 							z-index: 9999;
 						  }
-						  
-						  * {
-							opacity: 0.98 !important;
+						* {
+						  	opacity: 0.98 !important;
 							background-color: none !important;
+							color: none !important;
 							background-image: none !important;
 						  }
-						  
-						  div {
-							background-image: none !important;
-							background-color: none !important;
-						  }
-							`
+						`
 					}); // insertCSS
 				} // if
 			}); //  chrome.storage.local.get
