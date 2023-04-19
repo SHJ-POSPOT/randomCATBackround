@@ -38,15 +38,15 @@ async function getRandomCatPhoto() {
 	return imgUrl;
 }
 async function setRandomCatPhoto(tabID) {
-	chrome.storage.local.get("imageUrl", (result) => {
+	try {
+		const result = await chrome.storage.local.get("imageUrl");
 		const imageUrl = result["imageUrl"];
 		console.log(imageUrl);
 		if (imageUrl) {
-			console.log(tabID)
-			chrome.scripting.insertCSS({
+			await chrome.scripting.insertCSS({
 				target: { tabId: tabID },
 				css: `
-				html body {
+					html body {
 					background-image: url("${imageUrl}") !important;
 					background-color: rgba(255, 255, 255, 0.8) !important;
 					background-repeat: no-repeat !important;
@@ -54,18 +54,21 @@ async function setRandomCatPhoto(tabID) {
 					background-position: center center !important;
 					background-attachment: fixed !important;
 					z-index: 9999;
-				  }
-				* {
-					  opacity: 0.98 !important;
+					}
+					* {
+					opacity: 0.98 !important;
 					background-color: none !important;
 					color: none !important;
 					background-image: none !important;
-				  }
+					}
 				`
-			}); // insertCSS
-		} // if
-	}); //  chrome.storage.local.get
-}
+			});
+		}
+	} catch (error) {
+		console.error(error);
+	}
+  }
+  
 
 const unsplash_cat = [
 	'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1686&q=80',
