@@ -1,11 +1,11 @@
 {
 	"manifest_version": 3,
-	"name": "Unsplash Cat Background",
+	"name": "Random Cat Background",
 	"version": "1.0",
-	"description": "Changes the background of the browser to a random cat photo from Unsplash",
+	"description": "Change your browser's background to 100 random cat pictures from Unsplash.",
 	"icons": {
 	  "16": "icons/icon16.png",
-	  "32": "icons/icon32.png",
+	  "48": "icons/icon48.png",
 	  "64": "icons/icon64.png",
 	  "128": "icons/icon128.png"
 	},
@@ -14,7 +14,7 @@
 	},
 	"action": {
 		"default_icon": {
-			"16": "icons/icon16.png"
+			"48": "icons/icon48.png"
 		}
 	  },
 	"permissions": [
