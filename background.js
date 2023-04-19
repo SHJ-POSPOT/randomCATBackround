@@ -1,46 +1,34 @@
 chrome.action.onClicked.addListener(async (tab) => {
 	const imageUrl = await getRandomCatPhoto();
 	chrome.storage.local.set({ imageUrl: imageUrl }, () => {
-		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-			let tabID =  tabs[0]?.id
-			console.log(tabs.length);
-			if (tabs.length == 0) {
-				chrome.tabs.create({ url: "https://www.google.com/" }, (tab) => {
-					console.log( chrome.scripting.executeScript);
-					tabID = tab.id
-				});
-			} 
-
-			console.log(tabID)
-			chrome.storage.local.get("imageUrl", (result) => {
-				const imageUrl = result["imageUrl"];
-				if (imageUrl) {
-					console.log(imageUrl);
-					chrome.scripting.insertCSS({
-						target: { tabId: tabID },
-						css: `
-						html body {
-							background-image: url("${imageUrl}") !important;
-							background-color: rgba(255, 255, 255, 0.8) !important;
-							background-repeat: no-repeat !important;
-							background-size: 100%  !important;
-							background-position: center center !important;
-							background-attachment: fixed !important;
-							z-index: 9999;
-						  }
-						* {
-						  	opacity: 0.98 !important;
-							background-color: none !important;
-							color: none !important;
-							background-image: none !important;
-						  }
-						`
-					}); // insertCSS
-				} // if
-			}); //  chrome.storage.local.get
-		}); // chrome.tabs.query
+	  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+		let tabID = tabs[0]?.id;
+		// tabs 없거나 chrome으로 시작하는 경우
+		if (tabs.length == 0 || !tabID || tabs[0]?.url?.startsWith('chrome') || tabs[0]?.url?.startsWith('chrome-extension')) {
+			chrome.tabs.create({ url: "https://www.google.com/" }, (tab) => {
+				tabID = tab.id;
+				console.log(tabID)
+				// Add a listener for the onUpdated event
+				chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo, tab) {
+					if (tabId === tabID && changeInfo.status === 'complete') {
+					  // Remove the listener once the tab has finished loading
+					  chrome.tabs.onUpdated.removeListener(listener);
+					  setRandomCatPhoto(tabID);
+					}
+				  });
+			});
+		} else if(tabs[0]?.url?.startsWith('https://www.youtube.com/')) {
+			chrome.action.setBadgeText({ text: 'No' });
+			setTimeout(() => {
+				chrome.action.setBadgeText({ text: '' });
+			  }, 3000);
+		} else {
+		  setRandomCatPhoto(tabID);
+		}
+	  }); // chrome.tabs.query
 	}); // chrome.storage.local.set
-}); // onClicked
+  }); // onClicked
+  
 
 async function getRandomCatPhoto() {
 	// 가져온 unsplash_cat 배열 사용
@@ -48,6 +36,35 @@ async function getRandomCatPhoto() {
 	const imageUrl = unsplash_cat[randomIndex];
 	const imgUrl = imageUrl;
 	return imgUrl;
+}
+async function setRandomCatPhoto(tabID) {
+	chrome.storage.local.get("imageUrl", (result) => {
+		const imageUrl = result["imageUrl"];
+		console.log(imageUrl);
+		if (imageUrl) {
+			console.log(tabID)
+			chrome.scripting.insertCSS({
+				target: { tabId: tabID },
+				css: `
+				html body {
+					background-image: url("${imageUrl}") !important;
+					background-color: rgba(255, 255, 255, 0.8) !important;
+					background-repeat: no-repeat !important;
+					background-size: 100%  !important;
+					background-position: center center !important;
+					background-attachment: fixed !important;
+					z-index: 9999;
+				  }
+				* {
+					  opacity: 0.98 !important;
+					background-color: none !important;
+					color: none !important;
+					background-image: none !important;
+				  }
+				`
+			}); // insertCSS
+		} // if
+	}); //  chrome.storage.local.get
 }
 
 const unsplash_cat = [
@@ -93,7 +110,6 @@ const unsplash_cat = [
 	'https://images.unsplash.com/photo-1562119464-7480f81577cc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2062&q=80',
 	'https://images.unsplash.com/photo-1600357077527-930ccbaf7773?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1736&q=80',
 	'https://images.unsplash.com/photo-1586042091284-bd35c8c1d917?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1744&q=80',
-	'https://images.unsplash.com/photo-1577696393108-d99e9f054fff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=654&q=80',
 	'https://images.unsplash.com/photo-1590071396547-09fdbca64499?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
 	'https://images.unsplash.com/photo-1537460186220-8cd3f80f24e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
 	'https://images.unsplash.com/photo-1621937946258-0f805a206343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
@@ -150,5 +166,6 @@ const unsplash_cat = [
 	'https://images.unsplash.com/photo-1632413861883-c29972bf1799?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
 	'https://images.unsplash.com/photo-1592652426689-4e4f12c4aef5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
 	'https://images.unsplash.com/photo-1633604781508-365e6b190342?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-	'https://images.unsplash.com/photo-1671707696616-f7a53024e023?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2062&q=80'
+	'https://images.unsplash.com/photo-1671707696616-f7a53024e023?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2062&q=80',
+	'https://images.unsplash.com/photo-1498336179775-9836baef8fdf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'
 	]

@@ -20,7 +20,8 @@
 	"permissions": [
 		"storage",
 		"activeTab",
-		"scripting"
+		"scripting",
+		"notifications"
 	],
 	"optional_permissions": [
 		"topSites"
