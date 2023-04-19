@@ -16,7 +16,7 @@
 - 원하는 이미지 있으면 background.js의 unsplash_cat 배열에 추가 가능 (자동화 X)
 - 사진에 따라 해당 화면의 검정 글씨가 안보일 수 있어요🙀
 - 세로 사진은 몸통만 보이거나 발만 보이거나 그럴 수 있으니 그래도 귀엽게 봐주세요😹
-- chatGPT에 쓰면 아주 👍
+- chatGPT에 쓰면 아주 👍 (Youtube 사용 금지)
 ------------
 #### 💡 출처
 - 로고 : 미리캠퍼스 (https://www.miricanvas.com/design)
