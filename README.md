@@ -18,6 +18,12 @@
 - 세로 사진은 몸통만 보이거나 발만 보이거나 그럴 수 있으니 그래도 귀엽게 봐주세요😹
 - chatGPT에 쓰면 아주 👍 (Youtube 사용 금지)
 ------------
-#### 💡 출처
+#### 사용한 기술
+- CSS, javaScript
+
+####  이미지 출처
 - 로고 : 미리캠퍼스 (https://www.miricanvas.com/design)
 - 고양이 사진 : unsplash (https://unsplash.com/ko)
+
+#### LICENSE
+- 상업적 이용 불가, 비 상업적 목적으로 수정 및 사용 허용
