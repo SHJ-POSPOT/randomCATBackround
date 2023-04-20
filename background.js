@@ -46,20 +46,20 @@ async function setRandomCatPhoto(tabID) {
 			await chrome.scripting.insertCSS({
 				target: { tabId: tabID },
 				css: `
-					html body {
-					background-image: url("${imageUrl}") !important;
-					background-color: rgba(255, 255, 255, 0.8) !important;
+				html body {
+					background-image: linear-gradient(
+						rgba(255, 255, 255, 0.4),
+						rgba(255, 255, 255, 0.6)
+					  ), url("${imageUrl}") !important;
 					background-repeat: no-repeat !important;
 					background-size: 100%  !important;
 					background-position: center center !important;
 					background-attachment: fixed !important;
-					z-index: 9999;
 					}
 					* {
 					opacity: 0.98 !important;
-					background-color: none !important;
-					color: none !important;
-					background-image: none !important;
+					background: transparent  !important;
+					color: inherit  !important;
 					}
 				`
 			});
