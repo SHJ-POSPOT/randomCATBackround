@@ -52,7 +52,7 @@ async function setRandomCatPhoto(tabID) {
 						rgba(255, 255, 255, 0.6)
 					  ), url("${imageUrl}") !important;
 					background-repeat: no-repeat !important;
-					background-size: 100%  !important;
+					background-size: cover  !important;
 					background-position: center center !important;
 					background-attachment: fixed !important;
 					}
